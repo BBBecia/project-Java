@@ -23,7 +23,7 @@ public class Butelka {
         } else{
             ilosc = pojemnosc - ileLitrow;
             this.ileLitrow+=ilosc;
-            System.out.println("nie wszystko zostało wlane");
+            System.out.println("Za mało miejsca w butelce! Nie wszystko zostało wlane.");
             return false;
         }
         return true;
@@ -55,35 +55,97 @@ public class Butelka {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InputMismatchException {
         Butelka[] butelka = new Butelka[3];
         Butelka[] butelka_losowa = new Butelka[50];
         Random generator = new Random();
         Scanner wpisz = new Scanner(System.in);
 
-        System.out.println("Podaj pojemność butelki pierwszej i drugiej");
-        double pojemność1=wpisz.nextDouble();
-        double pojemność2=wpisz.nextDouble();
+        System.out.println("Podaj pojemność butelki pierwszej");
+        double pojemność1=0;
+        while (true) {
+            try {
+                pojemność1 = wpisz.nextDouble();
+                break;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Podaj poprawną liczbę!");
+                wpisz.next();
+            }
+        }
+
+        System.out.println("Podaj pojemność butelki drugiej");
+        double pojemność2=0;
+        while (true) {
+            try {
+                pojemność2 = wpisz.nextDouble();
+                break;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Podaj poprawną liczbę!");
+                wpisz.next();
+            }
+        }
         butelka[0]=new Butelka(0,pojemność1);
         butelka[1]=new Butelka(0,pojemność2);
         System.out.println("Pierwsza butelka jest pusta. Ile wody chcesz do niej wlać?");
-        double wlej = wpisz.nextDouble();
+        double wlej = 0;
+        while (true) {
+            try {
+                wlej = wpisz.nextDouble();
+                break;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Podaj poprawną liczbę!");
+                wpisz.next();
+            }
+        }
         butelka[0].wlej(wlej);
         System.out.println("W pierwszej butelce jest "+butelka[0].ileLitrow+" litrów wody.");
         System.out.println("Druga butelka jest pusta. Ile wody chcesz do niej wlać?");
-        wlej = wpisz.nextDouble();
+        wlej = 0;
+        while (true) {
+            try {
+                wlej = wpisz.nextDouble();
+                break;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Podaj poprawną liczbę!");
+                wpisz.next();
+            }
+        }
         butelka[1].wlej(wlej);
         System.out.println("W drugiej butelce jest "+butelka[1].ileLitrow+" litrów wody.");
-        System.out.println("Czy chcesz przelać wodę z jednej butelki do drugiej?");
+        System.out.println("Czy chcesz przelać wodę z jednej butelki do drugiej? Wpisz \"tak\", w przeciwnym wypadku nic nie zostanie przelane.");
         String czyPrzelac = wpisz.next();
         if(czyPrzelac.equals("tak")){
             System.out.println("Z której butelki chcesz przelać wodę?");
-            int zKtórejWylac = wpisz.nextInt();
+            int zKtórejWylac = 0;
+            while (true) {
+                try {
+                    zKtórejWylac = wpisz.nextInt();
+                    break;
+                }
+                catch (InputMismatchException e) {
+                    System.out.println("Podaj poprawną liczbę!");
+                    wpisz.next();
+                }
+            }
             if(zKtórejWylac!=1 && zKtórejWylac!=2){
                 System.out.println("Nie ma takiej butelki!");
             } else {
                 System.out.println("Ile litrów chcesz przelać?");
-                double ileWody=wpisz.nextDouble();
+                double ileWody=0;
+                while (true) {
+                    try {
+                        ileWody = wpisz.nextDouble();
+                        break;
+                    }
+                    catch (InputMismatchException e) {
+                        System.out.println("Podaj poprawną liczbę!");
+                        wpisz.next();
+                    }
+                }
                 butelka[(zKtórejWylac-1)].przelej(ileWody,butelka[(zKtórejWylac%2)]);
                 System.out.println("W pierwszej butelce jest "+butelka[0].ileLitrow+" litrów wody.");
                 System.out.println("W drugiej butelce jest "+butelka[1].ileLitrow+" litrów wody.");
